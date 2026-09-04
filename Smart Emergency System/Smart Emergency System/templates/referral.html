@@ -1,0 +1,521 @@
+```html
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="referral-page">
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================= -->
+
+    <div class="referral-header">
+
+        <div>
+
+            <span class="eyebrow">
+                SMART EMERGENCY RESPONSE
+            </span>
+
+            <h1>
+                Emergency Referral Center
+            </h1>
+
+            <p>
+                Real-time medical staff and emergency
+                hospital availability.
+            </p>
+
+        </div>
+
+        <div class="emergency-badge">
+            🚨 EMERGENCY
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         DEPARTMENT
+    ================================================= -->
+
+    <div class="department-panel">
+
+        <span>
+            SELECTED DEPARTMENT
+        </span>
+
+        <h2>
+            {{ department }}
+        </h2>
+
+    </div>
+
+
+    <!-- =================================================
+         SPECIALIST AVAILABLE
+    ================================================= -->
+
+    {% if doctor %}
+
+    <section class="success-panel">
+
+        <div class="big-icon">
+            ✓
+        </div>
+
+        <span>
+            SPECIALIST AVAILABLE
+        </span>
+
+        <h1>
+            Doctor Found
+        </h1>
+
+        <p>
+            A specialist is currently available
+            for {{ department }}.
+        </p>
+
+    </section>
+
+
+    <div class="doctor-result">
+
+        <div class="doctor-avatar">
+            👨‍⚕️
+        </div>
+
+
+        <div class="doctor-information">
+
+            <h2>
+                {{ doctor["name"] }}
+            </h2>
+
+            <p>
+                {{ doctor["department"] }} Specialist
+            </p>
+
+            <span class="available-badge">
+                ● Available
+            </span>
+
+        </div>
+
+
+        {% if doctor["phone"] %}
+
+        <a
+            href="tel:{{ doctor['phone'] }}"
+            class="call-button"
+        >
+            📞 Call Doctor
+        </a>
+
+        {% endif %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         SPECIALIST NOT AVAILABLE
+    ================================================= -->
+
+    <section class="referral-alert">
+
+        <div class="alert-icon">
+            🚨
+        </div>
+
+        <div>
+
+            <span>
+                SPECIALIST UNAVAILABLE
+            </span>
+
+            <h1>
+                Referral Assistance Required
+            </h1>
+
+            <p>
+                No {{ department }} specialist is currently
+                available in this hospital.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         INTERN
+    ================================================= -->
+
+    {% if intern %}
+
+    <div class="current-intern">
+
+        <div class="intern-icon">
+            👨‍⚕️
+        </div>
+
+
+        <div>
+
+            <span>
+                AVAILABLE INTERN
+            </span>
+
+            <h2>
+                {{ intern["name"] }}
+            </h2>
+
+            <p>
+                {{ intern["department"] }} Intern
+            </p>
+
+            <div class="available-badge">
+                ● Available
+            </div>
+
+        </div>
+
+
+        {% if intern["phone"] %}
+
+        <a
+            href="tel:{{ intern['phone'] }}"
+            class="call-button"
+        >
+            📞 Call
+        </a>
+
+        {% endif %}
+
+    </div>
+
+    {% else %}
+
+    <div class="unavailable-intern">
+
+        🩺 No intern doctor is currently available.
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         SMART REFERRAL
+    ================================================= -->
+
+    <div class="section-heading left">
+
+        <span>
+            SMART REFERRAL
+        </span>
+
+        <h2>
+            Nearby Emergency Hospitals
+        </h2>
+
+        <p>
+            Hospitals are ordered according to the
+            configured distance.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         HOSPITAL LIST
+    ================================================= -->
+
+    <div class="hospital-grid">
+
+
+    {% for hospital in hospitals %}
+
+        <div class="hospital-card">
+
+
+            <!-- Hospital Header -->
+
+            <div class="hospital-top">
+
+                <div class="hospital-icon">
+                    🏥
+                </div>
+
+                <span class="verified">
+                    ● Emergency Available
+                </span>
+
+            </div>
+
+
+            <!-- Hospital Name -->
+
+            <h2>
+                {{ hospital["name"] }}
+            </h2>
+
+
+            <!-- Address -->
+
+            {% if hospital["address"] %}
+
+            <p class="hospital-address">
+                📍 {{ hospital["address"] }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- Distance -->
+
+            {% if hospital["distance"] is not none %}
+
+            <div class="distance">
+
+                <strong>
+                    {{ hospital["distance"] }} km
+                </strong>
+
+                <span>
+                    away
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- Hospital Phone -->
+
+            {% if hospital["phone"] %}
+
+            <p class="hospital-phone">
+                📞 {{ hospital["phone"] }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 AVAILABLE DOCTOR IN HOSPITAL
+            ================================================= -->
+
+            {% if hospital["doctor_name"] %}
+
+            <div class="available-doctor">
+
+                <div class="mini-avatar">
+                    👨‍⚕️
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Available {{ department }} Doctor
+                    </span>
+
+                    <strong>
+                        {{ hospital["doctor_name"] }}
+                    </strong>
+
+
+                    {% if hospital["doctor_type"] %}
+
+                    <small>
+                        {{ hospital["doctor_type"] }}
+                    </small>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% if hospital["doctor_phone"] %}
+
+            <div class="doctor-contact">
+
+                📞 {{ hospital["doctor_phone"] }}
+
+            </div>
+
+            {% endif %}
+
+
+            {% else %}
+
+            <div class="unavailable-box">
+
+                No matching doctor currently available.
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 HOSPITAL ACTIONS
+            ================================================= -->
+
+            <div class="hospital-actions">
+
+
+                {% if hospital["phone"] %}
+
+                <a
+                    href="tel:{{ hospital['phone'] }}"
+                    class="call-hospital"
+                >
+                    📞 Call Hospital
+                </a>
+
+                {% endif %}
+
+
+                {% if hospital["latitude"] is not none
+                      and hospital["longitude"] is not none %}
+
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.google.com/maps/dir/?api=1&destination={{ hospital['latitude'] }},{{ hospital['longitude'] }}"
+                    class="map-button"
+                >
+                    🗺️ Directions
+                </a>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- =================================================
+             NO HOSPITAL
+        ================================================= -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🏥
+            </div>
+
+            <h3>
+                No Referral Hospital Found
+            </h3>
+
+            <p>
+                No emergency hospital is currently
+                available for the selected department.
+            </p>
+
+            <p>
+                Please contact the emergency reception.
+            </p>
+
+        </div>
+
+
+    {% endfor %}
+
+
+    </div>
+
+
+    {% endif %}
+
+
+    <!-- =================================================
+         RECEPTION SUPPORT
+    ================================================= -->
+
+    {% if reception %}
+
+    <div class="reception-banner">
+
+        <div class="reception-icon">
+            🧑‍💼
+        </div>
+
+
+        <div class="reception-information">
+
+            <span>
+                RECEPTION SUPPORT AVAILABLE
+            </span>
+
+            <strong>
+                {{ reception["name"] }}
+            </strong>
+
+        </div>
+
+
+        {% if reception["phone"] %}
+
+        <a
+            href="tel:{{ reception['phone'] }}"
+        >
+            📞 Contact Reception
+        </a>
+
+        {% endif %}
+
+    </div>
+
+    {% else %}
+
+    <div class="reception-unavailable">
+
+        🧑‍💼 Emergency reception is currently unavailable.
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- =================================================
+         BACK BUTTON
+    ================================================= -->
+
+    <div class="referral-actions">
+
+        <a
+            href="{{ url_for('patient_dashboard') }}"
+            class="back-button"
+        >
+            ← Back to Patient Dashboard
+        </a>
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-button"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+</div>
+
+{% endblock %}
+```

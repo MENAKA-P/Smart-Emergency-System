@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="dashboard-container">
+
+
+    <div class="dashboard-heading">
+
+
+        <div>
+
+            <span class="eyebrow">
+                MEDICAL TEAM
+            </span>
+
+            <h1>
+                Doctor Availability
+            </h1>
+
+            <p>
+                Current doctor and intern availability.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="doctor-grid">
+
+
+    {% for doctor in doctors %}
+
+
+        <div class="doctor-card">
+
+
+            <div class="doctor-avatar large">
+                👨‍⚕️
+            </div>
+
+
+            <h3>
+                {{ doctor["name"] }}
+            </h3>
+
+
+            <p>
+                {{ doctor["department"] }}
+            </p>
+
+
+            <span class="doctor-type">
+                {{ doctor["doctor_type"] }}
+            </span>
+
+
+            {% if doctor["availability"] == "Available" %}
+
+
+                <div class="availability available">
+                    ● Available
+                </div>
+
+
+            {% elif doctor["availability"] == "Busy" %}
+
+
+                <div class="availability busy">
+                    ● Busy
+                </div>
+
+
+            {% else %}
+
+
+                <div class="availability unavailable">
+                    ● Unavailable
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+    {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

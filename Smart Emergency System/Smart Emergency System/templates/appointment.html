@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="appointment-page">
+
+    <div class="appointment-header">
+
+        <span class="eyebrow">
+            PATIENT SERVICES
+        </span>
+
+        <h1>
+            Book an Appointment
+        </h1>
+
+        <p>
+            Schedule a consultation with an available doctor.
+        </p>
+
+    </div>
+
+
+    <div class="appointment-card">
+
+        <form method="POST"
+              action="{{ url_for('appointment') }}">
+
+
+            <!-- DOCTOR -->
+
+            <div class="form-group">
+
+                <label>
+                    Select Doctor
+                </label>
+
+                <select
+                    name="doctor_id"
+                    required
+                >
+
+                    <option value="">
+                        -- Select Doctor --
+                    </option>
+
+                    {% for doctor in doctors %}
+
+                    <option value="{{ doctor['id'] }}">
+
+                        {{ doctor['name'] }}
+                        —
+                        {{ doctor['department'] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label>
+                    Appointment Date
+                </label>
+
+                <input
+                    type="date"
+                    name="appointment_date"
+                    id="appointment_date"
+                    required
+                >
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="form-group">
+
+                <label>
+                    Appointment Time
+                </label>
+
+                <select
+                    name="appointment_time"
+                    required
+                >
+
+                    <option value="">
+                        -- Select Time --
+                    </option>
+
+                    <option value="09:00 AM">
+                        09:00 AM
+                    </option>
+
+                    <option value="10:00 AM">
+                        10:00 AM
+                    </option>
+
+                    <option value="11:00 AM">
+                        11:00 AM
+                    </option>
+
+                    <option value="12:00 PM">
+                        12:00 PM
+                    </option>
+
+                    <option value="02:00 PM">
+                        02:00 PM
+                    </option>
+
+                    <option value="03:00 PM">
+                        03:00 PM
+                    </option>
+
+                    <option value="04:00 PM">
+                        04:00 PM
+                    </option>
+
+                    <option value="05:00 PM">
+                        05:00 PM
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- REASON -->
+
+            <div class="form-group">
+
+                <label>
+                    Reason for Visit
+                </label>
+
+                <textarea
+                    name="reason"
+                    rows="4"
+                    placeholder="Enter your symptoms or reason for consultation..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="appointment-button"
+            >
+
+                📅 Confirm Appointment
+
+            </button>
+
+
+        </form>
+
+
+        <div class="appointment-info">
+
+            <strong>
+                ℹ️ Important
+            </strong>
+
+            <p>
+                For serious or life-threatening conditions,
+                please use the Emergency Registration instead
+                of booking a normal appointment.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // Prevent selecting past dates
+
+    const dateInput =
+        document.getElementById("appointment_date");
+
+    const today =
+        new Date().toISOString().split("T")[0];
+
+    dateInput.min = today;
+
+</script>
+
+{% endblock %}

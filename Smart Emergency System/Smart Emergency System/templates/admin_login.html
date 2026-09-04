@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="form-page">
+
+
+    <div class="form-card login-card">
+
+
+        <div class="form-header">
+
+
+            <div class="medical-logo">
+                🔐
+            </div>
+
+
+            <h2>
+                Administrator Portal
+            </h2>
+
+
+            <p>
+                Secure hospital management access.
+            </p>
+
+
+        </div>
+
+
+        <form method="POST">
+
+
+            <div class="input-group">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    name="username"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    name="password"
+                    type="password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button full-width"
+            >
+
+                Secure Login →
+
+            </button>
+
+
+        </form>
+
+
+        <div class="demo-login">
+
+            Demo Admin
+
+            <strong>
+                admin / admin123
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

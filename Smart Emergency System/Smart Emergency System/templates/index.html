@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Emergency System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 21px;
+            font-weight: 700;
+            color: #123b63;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: #123b63;
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #eef4fa;
+            color: #123b63;
+        }
+
+        .admin-btn {
+            background: #123b63 !important;
+            color: white !important;
+        }
+
+        .admin-btn:hover {
+            background: #0b2945 !important;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 560px;
+            display: flex;
+            align-items: center;
+            padding: 70px 7%;
+            background:
+                linear-gradient(
+                    135deg,
+                    #edf6ff 0%,
+                    #ffffff 55%,
+                    #f4f8fc 100%
+                );
+        }
+
+        .hero-content {
+            max-width: 680px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e4f0fb;
+            color: #15558a;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.12;
+            color: #123b63;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #d62828;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #5b6675;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .primary-btn {
+            background: #d62828;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #b51f1f;
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: #123b63;
+            border: 1px solid #d8e1eb;
+        }
+
+        .secondary-btn:hover {
+            background: #eef4fa;
+        }
+
+        /* ================= EMERGENCY CARD ================= */
+
+        .emergency-card {
+            margin-left: auto;
+            width: 350px;
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: 0 15px 45px rgba(18,59,99,0.13);
+        }
+
+        .emergency-icon {
+            width: 65px;
+            height: 65px;
+            background: #fff0f0;
+            color: #d62828;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .emergency-card h2 {
+            color: #123b63;
+            margin-bottom: 10px;
+        }
+
+        .emergency-card p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ================= EMERGENCY BUTTON ================= */
+
+        .emergency-help-btn {
+            width: 100%;
+            padding: 14px;
+            background: #d62828;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .emergency-help-btn:hover {
+            background: #b51f1f;
+            transform: translateY(-2px);
+        }
+
+        .emergency-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 7px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            padding: 50px 7%;
+            background: white;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            padding: 25px;
+            border-radius: 15px;
+            background: #f8fafc;
+            border: 1px solid #e7edf4;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            color: #123b63;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= SERVICES ================= */
+
+        .services {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: #123b63;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #6b7280;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            border: 1px solid #e7edf4;
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .service-icon {
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .service-card h3 {
+            color: #123b63;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #687386;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #123b63;
+            color: white;
+            text-align: center;
+            padding: 28px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .emergency-card {
+                margin: 0;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .nav-links {
+                gap: 2px;
+            }
+
+            .nav-links a {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">🏥</div>
+        Smart Emergency
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{{ url_for('index') }}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('patient_login') }}">
+                Patient Login
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('patient_register') }}">
+                Register
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('doctors') }}">
+                Doctors
+            </a>
+        </li>
+
+        <!-- ADMIN LOGIN -->
+        <li>
+            <a href="{{ url_for('admin_login') }}"
+               class="admin-btn">
+                🔐 Admin
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            ⚡ Smart Emergency Healthcare Platform
+        </div>
+
+        <h1>
+            Faster Response.<br>
+            <span>Better Emergency Care.</span>
+        </h1>
+
+        <p>
+            A smart hospital emergency management system that
+            helps patients submit emergency information, calculates
+            priority levels, checks doctor availability and alerts
+            hospital administration.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('patient_login') }}"
+               class="primary-btn">
+                Patient Login
+            </a>
+
+            <a href="{{ url_for('patient_register') }}"
+               class="secondary-btn">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMERGENCY INFORMATION CARD -->
+
+    <div class="emergency-card">
+
+        <div class="emergency-icon">
+            🚨
+        </div>
+
+        <h2>
+            Emergency Assistance
+        </h2>
+
+        <p>
+            Registered patients can submit emergency
+            information for faster hospital response.
+        </p>
+
+        <!-- NEW EMERGENCY BUTTON -->
+        <button type="button"
+                class="emergency-help-btn"
+                onclick="alert('🚨 EMERGENCY ALERT!\\n\\nPlease contact the hospital emergency department immediately.\\n\\nEmergency services are active.')">
+            🚨 Emergency Help
+        </button>
+        <a href="tel:108"
+   class="emergency-call-btn">
+    📞 Call Emergency — 111222
+</a>
+        <div class="emergency-status">
+            <span>
+                <span class="status-dot"></span>
+                Emergency Service
+            </span>
+
+            <strong>Active</strong>
+        </div>
+
+        <div class="emergency-status">
+            <span>👨‍⚕️ Doctors Available</span>
+            <strong>{{ available_doctors }}</strong>
+        </div>
+
+        <div class="emergency-status">
+            <span>🧑‍💼 Reception Available</span>
+            <strong>{{ reception_available }}</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="stats">
+
+    <div class="stats-container">
+
+        <div class="stat-card">
+            <h3>{{ doctor_count }}</h3>
+            <p>Total Doctors</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ available_doctors }}</h3>
+            <p>Available Doctors</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ emergency_count }}</h3>
+            <p>Active Emergency Cases</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>{{ reception_available }}</h3>
+            <p>Available Receptionists</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section class="services">
+
+    <div class="section-title">
+
+        <h2>
+            Smart Emergency Features
+        </h2>
+
+        <p>
+            Designed to improve emergency response and hospital coordination.
+        </p>
+
+    </div>
+
+
+    <div class="service-grid">
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🚨
+            </div>
+
+            <h3>
+                Emergency Registration
+            </h3>
+
+            <p>
+                Patients can submit symptoms, blood pressure,
+                heart rate, oxygen level and consciousness details.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                📊
+            </div>
+
+            <h3>
+                Priority Score
+            </h3>
+
+            <p>
+                Emergency information is evaluated to calculate
+                a priority score and emergency level.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                👨‍⚕️
+            </div>
+
+            <h3>
+                Doctor Availability
+            </h3>
+
+            <p>
+                The system checks specialist and intern doctor
+                availability according to the selected department.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🔊
+            </div>
+
+            <h3>
+                Emergency Alert
+            </h3>
+
+            <p>
+                A Windows emergency alarm is triggered when
+                a new emergency case is submitted.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🏥
+            </div>
+
+            <h3>
+                Hospital Referral
+            </h3>
+
+            <p>
+                If a suitable doctor is unavailable, the system
+                can display emergency-enabled hospital options.
+            </p>
+
+        </div>
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🔐
+            </div>
+
+            <h3>
+                Admin Dashboard
+            </h3>
+
+            <p>
+                Hospital administrators can monitor patients,
+                emergencies, doctors, receptionists and hospitals.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        © 2026 Smart Emergency System |
+        Smart Hospital Emergency Management
+    </p>
+
+</footer>
+
+
+</body>
+</html>

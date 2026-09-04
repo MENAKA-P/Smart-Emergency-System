@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+```
+<div class="dashboard-heading">
+
+    <div>
+
+        <span class="eyebrow">
+            PATIENT PORTAL
+        </span>
+
+        <h1>
+            Hello, {{ patient["name"] }} 👋
+        </h1>
+
+        <p>
+            Manage your healthcare information.
+        </p>
+
+    </div>
+
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+
+        <a
+            href="{{ url_for('appointment') }}"
+            class="admin-btn"
+        >
+            📅 Book Appointment
+        </a>
+
+
+        <a
+            href="{{ url_for('emergency') }}"
+            class="emergency-button"
+        >
+            🚨 Emergency Help
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- PATIENT PROFILE -->
+
+<div class="profile-grid">
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+
+            {{ patient["name"][0] }}
+
+        </div>
+
+        <div>
+
+            <h3>
+                {{ patient["name"] }}
+            </h3>
+
+            <p>
+                Patient ID #{{ patient["id"] }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <span>
+            Age
+        </span>
+
+        <strong>
+            {{ patient["age"] }}
+        </strong>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <span>
+            Blood Group
+        </span>
+
+        <strong>
+            {{ patient["blood_group"] }}
+        </strong>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <span>
+            Phone
+        </span>
+
+        <strong>
+            {{ patient["phone"] }}
+        </strong>
+
+    </div>
+
+</div>
+
+
+<!-- QUICK ACTIONS -->
+
+<section class="table-section">
+
+    <div class="section-heading left">
+
+        <span>
+            QUICK SERVICES
+        </span>
+
+        <h2>
+            Healthcare Services
+        </h2>
+
+    </div>
+
+
+    <div class="doctor-grid">
+
+
+        <div class="doctor-card compact">
+
+            <div class="doctor-avatar">
+                📅
+            </div>
+
+            <h3>
+                Book Appointment
+            </h3>
+
+            <p>
+                Schedule a consultation with an available doctor.
+            </p>
+
+            <a
+                href="{{ url_for('appointment') }}"
+                class="admin-btn"
+            >
+                Book Now
+            </a>
+
+        </div>
+
+
+        <div class="doctor-card compact">
+
+            <div class="doctor-avatar">
+                🚨
+            </div>
+
+            <h3>
+                Emergency Help
+            </h3>
+
+            <p>
+                Submit your current emergency condition for triage.
+            </p>
+
+            <a
+                href="{{ url_for('emergency') }}"
+                class="emergency-button"
+            >
+                Emergency
+            </a>
+
+        </div>
+
+
+        <div class="doctor-card compact">
+
+            <div class="doctor-avatar">
+                👨‍⚕️
+            </div>
+
+            <h3>
+                Doctor Availability
+            </h3>
+
+            <p>
+                View doctors and their current availability.
+            </p>
+
+            <a
+                href="{{ url_for('doctors') }}"
+                class="admin-btn"
+            >
+                View Doctors
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- EMERGENCY HISTORY -->
+
+<section class="table-section">
+
+    <div class="section-heading left">
+
+        <span>
+            EMERGENCY HISTORY
+        </span>
+
+        <h2>
+            Your emergency cases
+        </h2>
+
+    </div>
+
+
+    {% if cases %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Department
+                    </th>
+
+                    <th>
+                        Priority
+                    </th>
+
+                    <th>
+                        Score
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for case in cases %}
+
+                <tr>
+
+                    <td>
+                        {{ case["department"] }}
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status {{ case['emergency_level']|lower }}"
+                        >
+
+                            {{ case["emergency_level"] }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+                        {{ case["priority_score"] }}
+                    </td>
+
+
+                    <td>
+                        {{ case["status"] }}
+                    </td>
+
+
+                    <td>
+                        {{ case["created_at"] }}
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <div>
+            🩺
+        </div>
+
+        <h3>
+            No emergency records
+        </h3>
+
+        <p>
+            Your emergency requests will appear here.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+```
+
+</div>
+
+{% endblock %}

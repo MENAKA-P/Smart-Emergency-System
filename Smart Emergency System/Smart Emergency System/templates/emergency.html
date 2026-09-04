@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<div class="emergency-page">
+
+
+    <div class="emergency-header">
+
+
+        <div>
+
+            <span class="eyebrow">
+                EMERGENCY TRIAGE
+            </span>
+
+            <h1>
+                Emergency Patient Assessment
+            </h1>
+
+            <p>
+                Enter the patient's current condition.
+            </p>
+
+        </div>
+
+
+        <div class="emergency-symbol">
+            🚨
+        </div>
+
+
+    </div>
+
+
+    <form method="POST">
+
+
+        <div class="emergency-layout">
+
+
+            <div class="emergency-form-card">
+
+
+                <h2>
+                    Patient Condition
+                </h2>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Symptoms
+                    </label>
+
+                    <textarea
+                        name="symptoms"
+                        placeholder="Describe current symptoms..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Department
+                        </label>
+
+                        <select
+                            name="department"
+                            required
+                        >
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option>
+                                Cardiology
+                            </option>
+
+                            <option>
+                                Neurology
+                            </option>
+
+                            <option>
+                                Orthopedics
+                            </option>
+
+                            <option>
+                                General Medicine
+                            </option>
+
+                            <option>
+                                Emergency Medicine
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Required Procedure
+                        </label>
+
+                        <select name="procedure">
+
+                            <option>
+                                General Consultation
+                            </option>
+
+                            <option>
+                                Emergency Surgery
+                            </option>
+
+                            <option>
+                                Orthopedic Surgery
+                            </option>
+
+                            <option>
+                                Neurological Procedure
+                            </option>
+
+                            <option>
+                                Cardiac Procedure
+                            </option>
+
+                            <option>
+                                Diagnostic Procedure
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Blood Pressure
+                        </label>
+
+                        <input
+                            name="bp"
+                            placeholder="120/80"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Heart Rate
+                        </label>
+
+                        <input
+                            name="heart_rate"
+                            type="number"
+                            placeholder="72"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Oxygen SpO₂ %
+                        </label>
+
+                        <input
+                            name="oxygen"
+                            type="number"
+                            min="0"
+                            max="100"
+                            placeholder="98"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label>
+                            Consciousness
+                        </label>
+
+                        <select name="consciousness">
+
+                            <option>
+                                Conscious
+                            </option>
+
+                            <option>
+                                Confused
+                            </option>
+
+                            <option>
+                                Unconscious
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="emergency-submit"
+                >
+
+                    🚨 Assess Emergency Patient
+
+                </button>
+
+
+            </div>
+
+
+            <div class="triage-info">
+
+
+                <h3>
+                    Priority System
+                </h3>
+
+
+                <div class="priority-item critical">
+
+                    <strong>
+                        Critical
+                    </strong>
+
+                    <span>
+                        Score ≥ 70
+                    </span>
+
+                </div>
+
+
+                <div class="priority-item high">
+
+                    <strong>
+                        High
+                    </strong>
+
+                    <span>
+                        Score 40–69
+                    </span>
+
+                </div>
+
+
+                <div class="priority-item medium">
+
+                    <strong>
+                        Medium
+                    </strong>
+
+                    <span>
+                        Score 20–39
+                    </span>
+
+                </div>
+
+
+                <div class="priority-item low">
+
+                    <strong>
+                        Low
+                    </strong>
+
+                    <span>
+                        Score below 20
+                    </span>
+
+                </div>
+
+
+                <p class="small-note">
+
+                    This score is a project demonstration
+                    and does not replace clinical assessment.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+
+{% endblock %}

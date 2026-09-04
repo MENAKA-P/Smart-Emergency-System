@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        SmartCare Hospital
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='style.css'
+        ) }}"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <a
+        href="{{ url_for('index') }}"
+        class="logo"
+    >
+
+        <span>✚</span>
+
+        SmartCare
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('index') }}">
+            Home
+        </a>
+
+
+        <a href="{{ url_for('doctors') }}">
+            Doctors
+        </a>
+
+
+        {% if session.get("patient_id") %}
+
+            <a
+                href="{{ url_for(
+                    'patient_dashboard'
+                ) }}"
+            >
+                Dashboard
+            </a>
+
+
+            <a
+                class="emergency-nav"
+                href="{{ url_for('emergency') }}"
+            >
+                🚨 Emergency
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+
+        {% elif session.get("admin") %}
+
+            <a
+                href="{{ url_for(
+                    'admin_dashboard'
+                ) }}"
+            >
+                Admin Dashboard
+            </a>
+
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+
+        {% else %}
+
+            <a
+                href="{{ url_for('patient_login') }}"
+            >
+                Patient Login
+            </a>
+
+
+            <a
+                class="nav-button"
+                href="{{ url_for(
+                    'patient_register'
+                ) }}"
+            >
+                Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+{% with messages =
+    get_flashed_messages(
+        with_categories=true
+    )
+%}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<footer>
+
+    <div>
+
+        <strong>
+            SmartCare Hospital
+        </strong>
+
+        <p>
+            Smart emergency management
+            for better healthcare coordination.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <p>
+            © 2026 SmartCare
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script
+    src="{{ url_for(
+        'static',
+        filename='script.js'
+    ) }}"
+></script>
+
+
+</body>
+
+</html>

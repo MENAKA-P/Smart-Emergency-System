@@ -1,0 +1,415 @@
+```html
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="dashboard-heading">
+
+        <div>
+
+            <span class="eyebrow">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                Hospital Command Center
+            </h1>
+
+            <p>
+                Monitor patients, emergency cases
+                and medical staff.
+            </p>
+
+        </div>
+
+        <div class="live-status">
+            <span></span>
+            LIVE SYSTEM
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="admin-stats">
+
+        <div class="admin-stat">
+
+            <span>
+                👥 Patients
+            </span>
+
+            <strong>
+                {{ patients|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat emergency-stat">
+
+            <span>
+                🚨 Emergency Cases
+            </span>
+
+            <strong>
+                {{ emergencies|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <span>
+                👨‍⚕️ Doctors
+            </span>
+
+            <strong>
+                {{ doctors|length }}
+            </strong>
+
+        </div>
+
+
+        <div class="admin-stat">
+
+            <span>
+                🧑‍💼 Reception
+            </span>
+
+            <strong>
+                {{ receptionists|length }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         EMERGENCY MONITOR
+    ================================================= -->
+
+    <section class="table-section">
+
+        <div class="section-heading left">
+
+            <span>
+                EMERGENCY MONITOR
+            </span>
+
+            <h2>
+                Priority Queue
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Patient
+                        </th>
+
+                        <th>
+                            Department
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Score
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for case in emergencies %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>
+                                {{ case["patient_name"] }}
+                            </strong>
+
+                            <small>
+                                {{ case["patient_phone"] }}
+                            </small>
+
+                        </td>
+
+
+                        <td>
+                            {{ case["department"] }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="status {{ case['emergency_level']|lower }}">
+
+                                {{ case["emergency_level"] }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                {{ case["priority_score"] }}
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+                            {{ case["status"] }}
+                        </td>
+
+                    </tr>
+
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            No emergency cases.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         ALL PATIENT DETAILS
+    ================================================= -->
+
+    <section class="table-section">
+
+        <div class="section-heading left">
+
+            <span>
+                PATIENT MANAGEMENT
+            </span>
+
+            <h2>
+                All Patient Details
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Age</th>
+
+                        <th>Gender</th>
+
+                        <th>Phone</th>
+
+                        <th>Email</th>
+
+                        <th>Blood Group</th>
+
+                        <th>Address</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for patient in patients %}
+
+                    <tr>
+
+                        <td>
+                            {{ patient["id"] }}
+                        </td>
+
+                        <td>
+
+                            <strong>
+                                {{ patient["name"] }}
+                            </strong>
+
+                        </td>
+
+                        <td>
+                            {{ patient["age"] }}
+                        </td>
+
+                        <td>
+                            {{ patient["gender"] }}
+                        </td>
+
+                        <td>
+                            {{ patient["phone"] }}
+                        </td>
+
+                        <td>
+                            {{ patient["email"] }}
+                        </td>
+
+                        <td>
+                            {{ patient["blood_group"] }}
+                        </td>
+
+                        <td>
+                            {{ patient["address"] }}
+                        </td>
+
+                    </tr>
+
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            No patients registered.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DOCTOR AVAILABILITY
+    ================================================= -->
+
+    <section class="table-section">
+
+        <div class="section-heading left">
+
+            <span>
+                MEDICAL STAFF
+            </span>
+
+            <h2>
+                Doctor Availability
+            </h2>
+
+        </div>
+
+
+        <div class="doctor-grid">
+
+        {% for doctor in doctors %}
+
+            <div class="doctor-card compact">
+
+                <div class="doctor-avatar">
+                    👨‍⚕️
+                </div>
+
+
+                <h3>
+                    {{ doctor["name"] }}
+                </h3>
+
+
+                <p>
+                    {{ doctor["department"] }}
+                </p>
+
+
+                {% if doctor["availability"] == "Available" %}
+
+                    <div class="availability available">
+                        ● Available
+                    </div>
+
+                {% elif doctor["availability"] == "Busy" %}
+
+                    <div class="availability busy">
+                        ● Busy
+                    </div>
+
+                {% else %}
+
+                    <div class="availability unavailable">
+                        ● Unavailable
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <p>
+                No doctors available.
+            </p>
+
+        {% endfor %}
+
+        </div>
+
+    </section>
+
+
+</div>
+
+{% endblock %}
+```

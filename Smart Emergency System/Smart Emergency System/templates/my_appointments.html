@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="appointment-page">
+
+    <div class="appointment-header">
+
+        <span class="eyebrow">
+            PATIENT SERVICES
+        </span>
+
+        <h1>
+            My Appointments
+        </h1>
+
+        <p>
+            View your scheduled doctor appointments.
+        </p>
+
+    </div>
+
+
+    {% if appointments %}
+
+        <div class="appointments-list">
+
+        {% for appointment in appointments %}
+
+            <div class="appointment-result-card">
+
+                <div class="appointment-icon">
+                    📅
+                </div>
+
+
+                <div class="appointment-details">
+
+                    <h2>
+                        {{ appointment["doctor_name"] }}
+                    </h2>
+
+                    <p>
+                        {{ appointment["department"] }}
+                    </p>
+
+                    <div class="appointment-meta">
+
+                        <span>
+                            📅
+                            {{ appointment["appointment_date"] }}
+                        </span>
+
+                        <span>
+                            🕐
+                            {{ appointment["appointment_time"] }}
+                        </span>
+
+                    </div>
+
+
+                    {% if appointment["reason"] %}
+
+                    <p class="appointment-reason">
+
+                        <strong>
+                            Reason:
+                        </strong>
+
+                        {{ appointment["reason"] }}
+
+                    </p>
+
+                    {% endif %}
+
+
+                    <span class="appointment-status">
+
+                        {{ appointment["status"] }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="doctor-contact">
+
+                    📞
+                    {{ appointment["doctor_phone"] }}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <div>
+                📅
+            </div>
+
+            <h2>
+                No Appointments
+            </h2>
+
+            <p>
+                You haven't booked any appointments yet.
+            </p>
+
+            <a
+                href="{{ url_for('appointment') }}"
+                class="appointment-button"
+            >
+                Book an Appointment
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
